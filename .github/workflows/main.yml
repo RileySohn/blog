@@ -1,0 +1,29 @@
+name: Main Workflow
+
+on: [push, pull_request]
+  
+defaults:
+  run: 
+    shell: bash
+
+# Jobs run in parallel by default
+jobs:
+  dev-build:
+    runs-on: ubuntu-latest
+    if: contains(github.ref, 'feature') || endsWith(github.ref, '/develop') || startsWith(github.ref, 'refs/pull/')
+    env:
+      ENVIRONMENT: dev
+      BRANCH: ${{ github.ref }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: DevSkim
+        uses: microsoft/DevSkim-Action@v1
+        with:
+          output-filename: devskim-results.sarif
+          output-directory: ./
+
+      - name: show results
+        run: cat ./devskim-results.sarif
