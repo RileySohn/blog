@@ -60,10 +60,6 @@ allOpen {
 	annotation("javax.persistence.MappedSuperclass")
 }
 
-test {
-	useJUnitPlatform()
-}
-
 jacocoTestReport {
 	reports {
 		xml.enabled true
