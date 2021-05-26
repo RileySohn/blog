@@ -19,11 +19,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: DevSkim
-        uses: microsoft/DevSkim-Action@v1
-        with:
-          output-filename: devskim-results.sarif
-          output-directory: ./
+      - name: sonarcloud scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        args: >
+          -Dsonar.verbose=true
+        # with:
+        #   projectBaseDir:
 
-      - name: show results
-        run: cat ./devskim-results.sarif
+      # - name: DevSkim
+      #   uses: microsoft/DevSkim-Action@v1
+      #   with:
+      #     output-filename: devskim-results.sarif
+      #     output-directory: ./
+
+      # - name: show results
+      #   run: cat ./devskim-results.sarif
