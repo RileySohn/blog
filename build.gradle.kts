@@ -72,11 +72,3 @@ sonarqube {
 		property("sonar.projectkey", "blog")
 	}
 }
-
-jib {
-	to {
-		image = "_ECR_/_SERVICENAME_"
-		tags = [ '_TAG_' ]
-		credHelper = 'ecr-login'
-	}
-}
