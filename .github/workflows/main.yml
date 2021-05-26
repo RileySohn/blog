@@ -39,7 +39,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           chmod +x ./gradlew
-          ./gradlew build jacocoTestReport sonarqube --info          
+          ./gradlew kaptKotlin
+          ./gradlew build jacocoTestReport sonarqube --info
 
 
       # - name: DevSkim
