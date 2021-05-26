@@ -7,7 +7,6 @@ plugins {
 	kotlin("plugin.spring") version "1.5.0"
 	kotlin("plugin.jpa") version "1.5.0"
 	kotlin("plugin.allopen") version "1.4.32"
-	kotlin("kapt") version "1.4.32"
 	id("com.google.cloud.tools.jib") version "2.5.0"
 	id("org.sonarqube") version "2.8"
 	id("maven-publish")
@@ -41,7 +40,6 @@ dependencies {
 	testImplementation("org.junit.jupiter:junit-jupiter-api")
 	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 	testImplementation("com.ninja-squad:springmockk:3.0.1")
-	kapt("org.springframework.boot:spring-boot-configuration-processor")
 }
 
 tasks.withType<KotlinCompile> {
@@ -72,5 +70,13 @@ sonarqube {
 		property("sonar.host.url", "https://sonarcloud.io")
 		property("sonar.organization", "sonarcloudtest-riley")
 		property("sonar.projectkey", "blog")
+	}
+}
+
+jib {
+	to {
+		image = "_ECR_/_SERVICENAME_"
+		tags = [ '_TAG_' ]
+		credHelper = 'ecr-login'
 	}
 }
