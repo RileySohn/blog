@@ -8,6 +8,11 @@ plugins {
 	kotlin("plugin.jpa") version "1.5.0"
 	kotlin("plugin.allopen") version "1.4.32"
 	kotlin("kapt") version "1.4.32"
+	id("com.google.cloud.tools.jib") version "2.5.0"
+	id("jacoco")
+	id("java")
+	id("maven-publish")
+	id("org.sonarqube") version "2.8"
 }
 
 group = "com.example"
@@ -53,4 +58,30 @@ allOpen {
 	annotation("javax.persistent.Entity")
 	annotation("javax.persistence.Embeddable")
 	annotation("javax.persistence.MappedSuperclass")
+}
+
+test {
+	useJUnitPlatform()
+}
+
+jacocoTestReport {
+	reports {
+		xml.enabled true
+	}
+}
+
+sonarqube {
+	properties {
+		property 'sonar.host.url', 'https://sonarcloud.io'
+		property 'sonar.organization', 'sonarcloudtest-riley'
+		property 'sonar.projectkey', 'blog'
+	}
+}
+
+jib {
+	to {
+		image = "_ECR_/_SERVICENAME_"
+		tags = [ '_TAG_' ]
+		credHelper = 'ecr-login'
+	}
 }
