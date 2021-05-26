@@ -19,11 +19,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      # - name: cache gradle packages
+      #   uses: actions/cache@v1
+      #   with:
+      #     path: ~/.gradle/cache
+      #     key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+      #     restore-keys: ${{ runner.os }}-gradle
+
+      # - name: cache sonarcloud packages
+      #   uses: actions/cache@v1
+      #   with:
+      #     path: ~/.sonar/cache
+      #     key: ${{runner.os}}-sonar
+      #     restore-keys: ${{ runner.os }}-sonar
+
       - name: sonarcloud scan
-        run: ./gradlew build jacocoTestReport sonarqube --info
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          chmod +x ./gradlew
+          ./gradlew build jacocoTestReport sonarqube --info          
 
 
       # - name: DevSkim
