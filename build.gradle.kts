@@ -9,10 +9,11 @@ plugins {
 	kotlin("plugin.allopen") version "1.4.32"
 	kotlin("kapt") version "1.4.32"
 	id("com.google.cloud.tools.jib") version "2.5.0"
-	id("jacoco")
-	id("java")
-	id("maven-publish")
 	id("org.sonarqube") version "2.8"
+	id("maven-publish")
+
+	java
+	jacoco
 }
 
 group = "com.example"
@@ -60,17 +61,17 @@ allOpen {
 	annotation("javax.persistence.MappedSuperclass")
 }
 
-jacocoTestReport {
+tasks.jacocoTestReport {
 	reports {
-		xml.enabled true
+		xml.isEnabled = true
 	}
 }
 
 sonarqube {
 	properties {
-		property 'sonar.host.url', 'https://sonarcloud.io'
-		property 'sonar.organization', 'sonarcloudtest-riley'
-		property 'sonar.projectkey', 'blog'
+		property("sonar.host.url", "https://sonarcloud.io")
+		property("sonar.organization", "sonarcloudtest-riley")
+		property("sonar.projectkey", "blog")
 	}
 }
 
