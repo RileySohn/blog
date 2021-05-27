@@ -7,7 +7,6 @@ plugins {
 	kotlin("plugin.spring") version "1.5.0"
 	kotlin("plugin.jpa") version "1.5.0"
 	kotlin("plugin.allopen") version "1.4.32"
-	id("com.google.cloud.tools.jib") version "2.5.0"
 	id("org.sonarqube") version "2.8"
 	id("maven-publish")
 
@@ -32,7 +31,6 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("com.h2database:h2")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(module = "junit")
 		exclude(module = "mockito-core")
