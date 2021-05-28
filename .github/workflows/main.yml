@@ -19,6 +19,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: ZAP Scan
+        uses: zaproxy/action-baseline@v0.4.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          docker_name: 'owasp/zap2docker-stable'
+          target: 'https://www.zaproxy.org'
+          cmd_options: '-a'
+
       # - name: cache gradle packages
       #   uses: actions/cache@v1
       #   with:
@@ -33,14 +41,13 @@ jobs:
       #     key: ${{runner.os}}-sonar
       #     restore-keys: ${{ runner.os }}-sonar
 
-      - name: sonarcloud scan
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          chmod +x ./gradlew
-          ./gradlew build jacocoTestReport sonarqube --info
-
+      # - name: sonarcloud scan
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #   run: |
+      #     chmod +x ./gradlew
+      #     ./gradlew build jacocoTestReport sonarqube --info
 
       # - name: DevSkim
       #   uses: microsoft/DevSkim-Action@v1
